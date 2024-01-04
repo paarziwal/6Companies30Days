@@ -1,0 +1,24 @@
+class Solution {
+    private int gcd(int a ,  int b){
+        return b==0? a : gcd(b,a%b);
+    }
+    public int minimizeSet(int d1, int d2, int u1, int u2) {
+        long l=1 ,  h= Integer.MAX_VALUE;
+        long ans = h;
+        long lcm = ((long) d1 * (long) d2) / gcd(d1,d2);
+        while(l<=h){
+            long mid = l + (h-l)/2;
+            int x =(int) (mid - (mid/d1));
+            int y = (int) (mid - (mid/d2));
+            int z= (int) (mid - (mid/lcm));
+            if(x<u1 || y<u2 || z<u1+u2){
+                l=mid+1;
+            }
+            else{
+                ans = Math.min(ans,mid);
+                h=mid-1;
+            }
+        }
+        return (int) ans;
+    }
+}
